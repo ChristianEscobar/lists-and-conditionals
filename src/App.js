@@ -24,10 +24,8 @@ class App extends Component {
   textLengthChangeHandler = (event) => {
     let showChars = false;
 
-    if(event.target.value.length >= 5) {
+    if(event.target.value.length > 5) {
       showChars = true;
-    } else {
-      showChars = false;
     }
 
     this.setState({
