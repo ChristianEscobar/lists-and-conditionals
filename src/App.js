@@ -16,20 +16,12 @@ Challenges:
 
 class App extends Component {
   state = {
-    text: '',
-    showChars: false
+    text: ''
   }
 
   textChangeHandler = (event) => {
-    let showChars = false;
-
-    if(event.target.value.length > 5) {
-      showChars = true;
-    }
-
     this.setState({
-      text: event.target.value,
-      showChars
+      text: event.target.value
     });
   }
 
@@ -45,18 +37,17 @@ class App extends Component {
     // Add custom code here
     let charComponents = null;
 
-    if(this.state.showChars) {
-      charComponents = (
-        <div>
-          { this.state.text.split('').map( (char, charIndex) => {
-            return <CharComponent
-                    key={charIndex}
-                    value={char} 
-                    click={this.deleteCharHandler.bind(this, charIndex)} />
-          })}
-        </div>
-      )
-    }
+    charComponents = (
+      <div>
+        { this.state.text.split('').map( (char, charIndex) => {
+          return <CharComponent
+                  key={charIndex}
+                  value={char} 
+                  click={this.deleteCharHandler.bind(this, charIndex)} />
+        })}
+      </div>
+    )
+    
 
     return (
       <div className="App">
