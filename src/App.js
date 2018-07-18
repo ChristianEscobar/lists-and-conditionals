@@ -4,9 +4,19 @@ import './App.css';
 import ValidationComponent from './ValidationComponent/ValidationComponent';
 import CharComponent from './CharComponent/CharComponent';
 
+/*
+Challenges:
+
+1. Deciding what values should be stored in state
+2. I created a text length change handler which checks the event.target.value.length
+    to set a showChars flag stored in the state to true/false.  I struggled with deciding 
+    if this should be done in the ValidationComponent
+3. I had to refer to the sample App.js from lectures on how to create a list of components
+ */
+
 class App extends Component {
   state = {
-    text: '',
+    textArray: [],
     textLength: 0,
     showChars: false
   }
@@ -21,16 +31,18 @@ class App extends Component {
     }
 
     this.setState({
-      text: event.target.value,
+      textArray: event.target.value.split(''),
       textLength: event.target.value.length,
       showChars
     });
   }
 
-  toggleCharComponents = () => {
-    const showChars = this.state.showChars;
+  deleteCharHandler = (charIndex) => {
+    const textArray = [...this.state.textArray];
 
-    this.setState( {showChars: !showChars} );
+    textArray.splice(charIndex, 1);
+
+    this.setState( {textArray} );
   }
 
   render() {
@@ -38,12 +50,13 @@ class App extends Component {
     let charComponents = null;
 
     if(this.state.showChars) {
-      const textArray = this.state.text.split('');
-
       charComponents = (
         <div>
-          { textArray.map(char => {
-            return <CharComponent value={char} />
+          { this.state.textArray.map( (char, charIndex) => {
+            return <CharComponent
+                    key={charIndex}
+                    value={char} 
+                    click={this.deleteCharHandler.bind(this, charIndex)} />
           })}
         </div>
       )
@@ -51,7 +64,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input type="text" 
+        <input type="text"
+            value={this.state.textArray.join('')} 
             onChange={event => this.textLengthChangeHandler(event)}
         />
         <ValidationComponent textLength={this.state.textLength} />

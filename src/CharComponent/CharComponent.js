@@ -3,7 +3,7 @@ import './CharComponent.css'
 
 const charComponent = (props) => {
   return (
-    <div class="charComponent">
+    <div className="charComponent" onClick={props.click}>
       {props.value}
     </div>
   )
