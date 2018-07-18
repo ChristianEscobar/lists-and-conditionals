@@ -66,7 +66,7 @@ class App extends Component {
       <div className="App">
         <input type="text"
             value={this.state.textArray.join('')} 
-            onChange={event => this.textLengthChangeHandler(event)}
+            onChange={this.textLengthChangeHandler}
         />
         <ValidationComponent textLength={this.state.textLength} />
         {charComponents}
