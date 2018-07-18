@@ -5,8 +5,6 @@ const validationComponent = (props) => {
 
   if (props.textLength < 5) {
     outputMessage = "Text is too short";
-  } else {
-    outputMessage = "Current text length " + props.textLength;
   }
 
   return (
