@@ -16,12 +16,11 @@ Challenges:
 
 class App extends Component {
   state = {
-    textArray: [],
-    textLength: 0,
+    text: '',
     showChars: false
   }
 
-  textLengthChangeHandler = (event) => {
+  textChangeHandler = (event) => {
     let showChars = false;
 
     if(event.target.value.length > 5) {
@@ -29,18 +28,17 @@ class App extends Component {
     }
 
     this.setState({
-      textArray: event.target.value.split(''),
-      textLength: event.target.value.length,
+      text: event.target.value,
       showChars
     });
   }
 
   deleteCharHandler = (charIndex) => {
-    const textArray = [...this.state.textArray];
+    const textArray = this.state.text.split('');
 
     textArray.splice(charIndex, 1);
 
-    this.setState( {textArray} );
+    this.setState( {text: textArray.join('')} );
   }
 
   render() {
@@ -50,7 +48,7 @@ class App extends Component {
     if(this.state.showChars) {
       charComponents = (
         <div>
-          { this.state.textArray.map( (char, charIndex) => {
+          { this.state.text.split('').map( (char, charIndex) => {
             return <CharComponent
                     key={charIndex}
                     value={char} 
@@ -63,10 +61,10 @@ class App extends Component {
     return (
       <div className="App">
         <input type="text"
-            value={this.state.textArray.join('')} 
-            onChange={this.textLengthChangeHandler}
+            value={this.state.text} 
+            onChange={this.textChangeHandler}
         />
-        <ValidationComponent textLength={this.state.textLength} />
+        <ValidationComponent textLength={this.state.text.length} />
         {charComponents}
       </div>
     );
